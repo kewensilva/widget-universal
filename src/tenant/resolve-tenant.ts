@@ -31,7 +31,8 @@ export const resolveTenant = async (publicKey: string): Promise<TenantConfig> =>
             publicKey,
             allowedDomains: [
                 '127.0.0.1',
-                "cliente.com.br"
+                "cliente.com.br",
+                "apresentacaocontentmkt.com.br"
             ],
 
             widgetConfig
