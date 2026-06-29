@@ -13,7 +13,7 @@ export default defineConfig({
       entry:
         path.resolve(
           __dirname,
-          "src/main.ts"
+          "src/index.ts"
         ),
 
       name:
