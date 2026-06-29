@@ -1,15 +1,40 @@
 import { defineConfig } from "vite";
+import path from "path";
+
 
 export default defineConfig({
+
   build: {
+
+    outDir: "dist",
+
     lib: {
-      entry: "src/index.ts",
 
-      name: "CRMWidget",
+      entry:
+        path.resolve(
+          __dirname,
+          "src/main.ts"
+        ),
 
-      fileName: () => "widget.js",
+      name:
+        "CRMWidget",
 
-      formats: ["iife"],
+      fileName:
+        "widget"
+
     },
-  },
+
+    rollupOptions: {
+
+      output: {
+
+        format:
+          "iife"
+
+      }
+
+    }
+
+  }
+
 });
