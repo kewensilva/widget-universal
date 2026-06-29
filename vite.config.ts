@@ -8,6 +8,9 @@ export default defineConfig({
 
     outDir: "dist",
 
+    emptyOutDir: true,
+
+
     lib: {
 
       entry:
@@ -16,13 +19,16 @@ export default defineConfig({
           "src/index.ts"
         ),
 
+
       name:
         "CRMWidget",
 
+
       fileName:
-        "widget"
+        () => "widget.js"
 
     },
+
 
     rollupOptions: {
 
