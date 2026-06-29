@@ -1,18 +1,14 @@
 {
-  "name": "@meu-crm/widget",
+  "name": "widget-universal",
 
-  "version": "1.0.0",
-
-  "private": true,
+  "packageManager": "pnpm@10.28.0",
 
   "scripts": {
-    "dev": "vite",
-
     "build": "vite build"
   },
 
   "devDependencies": {
-    "typescript": "^5.8.0",
-    "vite": "^7.0.0"
+    "typescript": "^5.9.3",
+    "vite": "^7.3.5"
   }
 }
