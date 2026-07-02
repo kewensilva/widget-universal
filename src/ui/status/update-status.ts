@@ -1,48 +1,60 @@
-export const updateStatus =
-(
- element:HTMLElement,
- status:
- "loading" |
- "success" |
- "error"
+export const updateStatus = (
+
+    element: HTMLElement,
+
+    type:
+    "loading" |
+    "success" |
+    "error"
+
 ) => {
 
 
- element.style.display =
- "block";
+
+    element.style.display =
+        "block";
 
 
- if(status === "loading"){
 
-  element.innerHTML =
-  `
-  Enviando...
-  `;
+    if(type === "loading"){
 
- }
+        element.innerHTML =
+        `
+        Enviando...
+        `;
 
-
- if(status === "success"){
-
-  element.innerHTML =
-  `
-  <strong>
-  Enviado com sucesso!
-  </strong>
-
-  `;
-
- }
+    }
 
 
- if(status === "error"){
 
-  element.innerHTML =
-  `
-  Ocorreu um erro.
-  Tente novamente.
-  `;
+    if(type === "success"){
 
- }
+
+        element.innerHTML =
+        `
+        <div class="crm-success">
+
+            Dados enviados com sucesso!
+
+        </div>
+        `;
+
+    }
+
+
+
+    if(type === "error"){
+
+
+        element.innerHTML =
+        `
+        <div class="crm-error">
+
+            Erro ao enviar dados.
+
+        </div>
+        `;
+
+    }
 
 };

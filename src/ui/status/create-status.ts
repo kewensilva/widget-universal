@@ -1,28 +1,58 @@
+import {
+    setStatusElement
+}
+from "./status-state";
+
+
+
 export const createStatus =
 (
- container:HTMLElement
+    container: HTMLElement
 ) => {
 
 
- const status =
- document.createElement(
-  "div"
- );
+    const existing =
+        container.querySelector(
+            ".crm-widget-status"
+        );
 
 
- status.className =
- "crm-widget-status";
+    if(existing){
+
+        return existing as HTMLElement;
+
+    }
 
 
- status.style.display =
- "none";
+
+    const status =
+        document.createElement(
+            "div"
+        );
 
 
- container.appendChild(
-  status
- );
+    status.className =
+        "crm-widget-status";
 
 
- return status;
+
+    status.style.display =
+        "none";
+
+
+
+    container.appendChild(
+        status
+    );
+
+
+
+    setStatusElement(
+        status
+    );
+
+
+
+    return status;
 
 };

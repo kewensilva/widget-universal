@@ -1,4 +1,4 @@
-(function(r){typeof define=="function"&&define.amd?define(r):r()})((function(){"use strict";const r={initialized:!1,sessionId:"",config:null,tenant:null},L=()=>{const e=document.querySelectorAll("script");let t=null;if(e.forEach(n=>{n.src.includes("widget.js")&&(t=n)}),!t)throw new Error("Widget script não encontrado");return{key:t.getAttribute("data-key")||"test",position:t.getAttribute("data-position")||"right"}},M=()=>crypto.randomUUID(),g="crm_widget_session_id",p="crm_widget_landing_page",f="crm_widget_utm",w=()=>{const e=localStorage.getItem(g);if(e)return e;const t=M();return localStorage.setItem(g,t),t},s=new Map,A=(e,t)=>{s.has(e)||s.set(e,new Set),s.get(e)?.add(t)},h=(e,t)=>{s.get(e)?.forEach(n=>n(t))},c={LEAD_SUBMIT:"lead:submit",SESSION_CREATED:"session:created"},N=()=>window.location.href,O=()=>{const e=localStorage.getItem(p);if(e)return e;const t=window.location.href;return localStorage.setItem(p,t),t},U=()=>document.referrer,D=()=>{const e=new URLSearchParams(window.location.search),t={utmSource:e.get("utm_source")??void 0,utmMedium:e.get("utm_medium")??void 0,utmCampaign:e.get("utm_campaign")??void 0,utmContent:e.get("utm_content")??void 0,utmTerm:e.get("utm_term")??void 0};if(Object.values(t).some(Boolean))return localStorage.setItem(f,JSON.stringify(t)),t;const o=localStorage.getItem(f);return o?JSON.parse(o):{}},b=()=>({sessionId:w(),pageUrl:N(),landingPage:O(),referrer:U(),...D()}),k=`
+(function(r){typeof define=="function"&&define.amd?define(r):r()})((function(){"use strict";const r={initialized:!1,sessionId:"",config:null,tenant:null},M=()=>{const e=document.querySelector("#crm-widget-script");if(!e)throw new Error("Widget script não encontrado");return{key:e.dataset.key??"",position:e.dataset.position==="left"?"left":"right",debug:e.dataset.debug==="true"}},N=()=>crypto.randomUUID(),g="crm_widget_session_id",p="crm_widget_landing_page",f="crm_widget_utm",w=()=>{const e=localStorage.getItem(g);if(e)return e;const t=N();return localStorage.setItem(g,t),t},a=new Map,O=(e,t)=>{a.has(e)||a.set(e,new Set),a.get(e)?.add(t)},h=(e,t)=>{a.get(e)?.forEach(n=>n(t))},c={LEAD_SUBMIT:"lead:submit",SESSION_CREATED:"session:created"},U=()=>window.location.href,D=()=>{const e=localStorage.getItem(p);if(e)return e;const t=window.location.href;return localStorage.setItem(p,t),t},k=()=>document.referrer,A=()=>{const e=new URLSearchParams(window.location.search),t={utmSource:e.get("utm_source")??void 0,utmMedium:e.get("utm_medium")??void 0,utmCampaign:e.get("utm_campaign")??void 0,utmContent:e.get("utm_content")??void 0,utmTerm:e.get("utm_term")??void 0};if(Object.values(t).some(Boolean))return localStorage.setItem(f,JSON.stringify(t)),t;const o=localStorage.getItem(f);return o?JSON.parse(o):{}},b=()=>({sessionId:w(),pageUrl:U(),landingPage:D(),referrer:k(),...A()}),P=`
 
 
 .crm-widget-modal {
@@ -174,9 +174,41 @@
 
 
 }
+.crm-widget-status {
 
 
-`,P=`
+ margin-top:12px;
+
+
+ text-align:center;
+
+
+ font-size:14px;
+
+
+}
+
+
+
+.crm-success {
+
+
+ color:#16a34a;
+
+
+}
+
+
+
+.crm-error {
+
+
+ color:#dc2626;
+
+
+}
+
+`,R=`
 
 
 .crm-widget-button {
@@ -224,14 +256,14 @@
 }
 
 
-`;let d=null;const R=()=>{if(d)return d;const e=document.createElement("div");e.id="crm-widget-root",document.body.appendChild(e);const t=e.attachShadow({mode:"open"}),n=document.createElement("style");return n.textContent=`
+`;let d=null;const z=()=>{if(d)return d;const e=document.createElement("div");e.id="crm-widget-root",document.body.appendChild(e);const t=e.attachShadow({mode:"open"}),n=document.createElement("style");return n.textContent=`
+
+    ${R}
+
 
     ${P}
 
-
-    ${k}
-
-  `,t.appendChild(n),d=t,t},z=(e,t,n)=>{const o=document.createElement("button");return o.className="crm-widget-button",o.innerHTML="💬",Object.assign(o.style,{position:"fixed",bottom:"20px",[t]:"20px",width:"56px",height:"56px",borderRadius:"50%",background:n,color:"#fff",border:"none",cursor:"pointer",zIndex:"999999"}),e.appendChild(o),o},F=e=>{const t=e.querySelector(".crm-widget-modal");if(t)return t;const n=document.createElement("div");return n.className="crm-widget-modal",n.innerHTML=`
+  `,t.appendChild(n),d=t,t},F=(e,t,n)=>{const o=document.createElement("button");return o.className="crm-widget-button",o.innerHTML="💬",Object.assign(o.style,{position:"fixed",bottom:"20px",[t]:"20px",width:"56px",height:"56px",borderRadius:"50%",background:n,color:"#fff",border:"none",cursor:"pointer",zIndex:"999999"}),e.appendChild(o),o},q=e=>{const t=e.querySelector(".crm-widget-modal");if(t)return t;const n=document.createElement("div");return n.className="crm-widget-modal",n.innerHTML=`
 
  <div class="crm-widget-window">
 
@@ -260,7 +292,7 @@
 
  </div>
 
- `,e.appendChild(n),n},q=e=>{e.style.display="flex"},$=e=>{e.style.display="none"};let S=null;const W=e=>{S=e},j=()=>S,B=e=>{const t=j();if(t)return t;const n=document.createElement("form");return n.className="crm-widget-form",n.innerHTML=`
+ `,e.appendChild(n),n},$=e=>{e.style.display="flex"},W=e=>{e.style.display="none"};let S=null;const B=e=>{S=e},H=()=>S,j=e=>{const t=H();if(t)return t;const n=document.createElement("form");return n.className="crm-widget-form",n.innerHTML=`
 
     <div class="crm-widget-field">
 
@@ -289,7 +321,7 @@
       <input
         name="phone"
         type="tel"
-        placeholder="Telefone"
+        placeholder="Telefone Ex:(11 999999999)"
         required
       />
 
@@ -326,4 +358,18 @@
     </button>
 
 
-  `,e.appendChild(n),W(n),n},y=e=>e.trim().length>0,G=(e,t)=>e.trim().length>=t,J=e=>y(e)?G(e,3):!1,K=e=>y(e)?/^\(?\d{2}\)?\s?\d{4,5}[-\s]?\d{4}$/.test(e.trim()):!1,H=e=>e?/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e):!0,Q=e=>{const t=b();return{lead:e,tenant:{id:r.tenant?.id??"",publicKey:r.tenant?.publicKey??""},tracking:{sessionId:t.sessionId,pageUrl:t.pageUrl,landingPage:t.landingPage,referrer:t.referrer,utm:{utmSource:t.utmSource,utmMedium:t.utmMedium,utmCampaign:t.utmCampaign,utmContent:t.utmContent,utmTerm:t.utmTerm}},source:"widget",timestamp:new Date().toISOString()}},x="crm_widget_lead_queue",E=()=>{const e=localStorage.getItem(x);return e?JSON.parse(e):[]},l=e=>{localStorage.setItem(x,JSON.stringify(e))},V=e=>{const t={id:crypto.randomUUID(),payload:e,status:"pending",attempts:0,createdAt:new Date().toISOString()},n=E();n.push(t),l(n)};let v=!1;const Y=()=>v,X=()=>{v=!0},Z=e=>{Y()||(X(),e.addEventListener("submit",t=>{t.preventDefault();const n=new FormData(e),o={name:String(n.get("name")??""),phone:String(n.get("phone")??""),email:String(n.get("email")??"")};if(!J(o.name)){console.warn("Nome inválido");return}if(!K(o.phone)){console.warn("Telefone inválido");return}if(!H(o.email)){console.warn("Email inválido");return}const i=Q(o);V(i),h(c.LEAD_SUBMIT,i)}))};let I=!1;const ee=(e,t)=>{if(I)return;I=!0;const n=F(t),o=n.querySelector(".crm-widget-body"),i=B(o);Z(i);const a=n.querySelector(".crm-widget-close");e.addEventListener("click",()=>{q(n)}),a.addEventListener("click",()=>{$(n)})},te=async e=>(console.log("Loading widget config",e),{theme:{primaryColor:"#2563eb",textColor:"#ffffff"},widget:{position:"right",title:"Fale conosco"},form:{fields:["name","phone","email"],required:["name","phone"]}}),ne=async e=>{const t=await te(e);return{id:"tenant_test_001",name:"Empresa Teste",publicKey:e,allowedDomains:["127.0.0.1","cliente.com.br","apresentacaocontentmkt.com.br"],widgetConfig:t}},oe=()=>window.location.hostname,re=e=>{const t=oe();return console.log("[Security] domínio atual:",t),console.log("[Security] domínios permitidos:",e),e.includes(t)},ie=async(e,t)=>{const n=await fetch(e,{headers:{"Content-Type":"application/json",...t?.headers},...t});return{data:await n.json(),status:n.status}},T={baseUrl:"http://localhost:3333",leadEndpoint:"/v1/leads"};let u=!1;const se=e=>{u=e},m={info(e,t){u&&console.log(`[Widget] ${e}`,t??"")},warn(e,t){u&&console.warn(`[Widget] ${e}`,t??"")},error(e,t){console.error(`[Widget] ${e}`,t??"")}},_=async e=>{const t=await ie(`${T.baseUrl}${T.leadEndpoint}`,{method:"POST",body:JSON.stringify(e)});return m.info("Enviando lead",e),t},ae=async()=>{const e=E();for(const t of e)if(t.status!=="success")try{t.status="sending",t.attempts++,l(e),await _(t.payload),t.status="success"}catch(n){t.status="failed",m.error("Falha ao enviar lead",n)}l(e)},C=async()=>{if(r.initialized)return;ae();const e=L();se(e.debug);const t=await ne(e.key),n=w(),o=b();if(!re(t.allowedDomains)){console.error("[Widget] domínio não autorizado");return}const a=R();r.config=e,r.sessionId=n,r.tenant=t,r.initialized=!0,h(c.SESSION_CREATED,n);const de=z(a,t.widgetConfig.widget.position,t.widgetConfig.theme.primaryColor);ee(de,a),m.info("Widget inicializado",{config:e,tenant:t,sessionId:n,tracking:o})},ce=()=>{if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",C);return}C()};A(c.LEAD_SUBMIT,async e=>{console.log("ENVIANDO LEAD",e);const t=await _(e);console.log("RESPOSTA API",t)}),ce()}));
+  `,e.appendChild(n),B(n),n},G=e=>{const t=e.querySelector(".crm-widget-status");if(t)return t;const n=document.createElement("div");return n.className="crm-widget-status",n.style.display="none",e.appendChild(n),n},y=(e,t)=>{e.style.display="block",t==="loading"&&(e.innerHTML=`
+        Enviando...
+        `),t==="success"&&(e.innerHTML=`
+        <div class="crm-success">
+
+            Dados enviados com sucesso!
+
+        </div>
+        `),t==="error"&&(e.innerHTML=`
+        <div class="crm-error">
+
+            Erro ao enviar dados.
+
+        </div>
+        `)},J=e=>{e.reset()},x=e=>e.trim().length>0,K=(e,t)=>e.trim().length>=t,Q=e=>x(e)?K(e,3):!1,V=e=>x(e)?/^\(?\d{2}\)?\s?\d{4,5}[-\s]?\d{4}$/.test(e.trim()):!1,Y=e=>e?/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e):!0,X=e=>{const t=b();return{lead:e,tenant:{id:r.tenant?.id??"",publicKey:r.tenant?.publicKey??""},tracking:{sessionId:t.sessionId,pageUrl:t.pageUrl,landingPage:t.landingPage,referrer:t.referrer,utm:{utmSource:t.utmSource,utmMedium:t.utmMedium,utmCampaign:t.utmCampaign,utmContent:t.utmContent,utmTerm:t.utmTerm}},source:"widget",timestamp:new Date().toISOString()}},v="crm_widget_lead_queue",E=()=>{const e=localStorage.getItem(v);return e?JSON.parse(e):[]},l=e=>{localStorage.setItem(v,JSON.stringify(e))},Z=e=>{const t={id:crypto.randomUUID(),payload:e,status:"pending",attempts:0,createdAt:new Date().toISOString()},n=E();n.push(t),l(n)};let I=!1;const ee=()=>I,te=()=>{I=!0},ne=e=>{ee()||(te(),e.addEventListener("submit",t=>{t.preventDefault();const n=new FormData(e),o={name:String(n.get("name")??""),phone:String(n.get("phone")??""),email:String(n.get("email")??"")};if(!Q(o.name)){console.warn("Nome inválido!");return}if(!V(o.phone)){console.warn("Telefone inválido");return}if(!Y(o.email)){console.warn("Email inválido");return}const s=X(o),i=G(e.parentElement);y(i,"loading"),Z(s),h(c.LEAD_SUBMIT,s),y(i,"success"),J(e)}))};let T=!1;const oe=(e,t)=>{if(T)return;T=!0;const n=q(t),o=n.querySelector(".crm-widget-body"),s=j(o);ne(s);const i=n.querySelector(".crm-widget-close");e.addEventListener("click",()=>{$(n)}),i.addEventListener("click",()=>{W(n)})},re=async e=>(console.log("Loading widget config",e),{theme:{primaryColor:"#2563eb",textColor:"#ffffff"},widget:{position:"right",title:"Fale conosco"},form:{fields:["name","phone","email"],required:["name","phone"]}}),ie=async e=>{const t=await re(e);return{id:"tenant_test_001",name:"Empresa Teste",publicKey:e,allowedDomains:["127.0.0.1","cliente.com.br","apresentacaocontentmkt.com.br"],widgetConfig:t}},se=()=>window.location.hostname,ae=e=>{const t=se();return console.log("[Security] domínio atual:",t),console.log("[Security] domínios permitidos:",e),e.includes(t)},ce=async(e,t)=>{const n=await fetch(e,{headers:{"Content-Type":"application/json",...t?.headers},...t});return{data:await n.json(),status:n.status}},_={baseUrl:"http://localhost:3333",leadEndpoint:"/v1/leads"};let u=!1;const de=e=>{u=e},m={info(e,t){u&&console.log(`[Widget] ${e}`,t??"")},warn(e,t){u&&console.warn(`[Widget] ${e}`,t??"")},error(e,t){console.error(`[Widget] ${e}`,t??"")}},C=async e=>{const t=await ce(`${_.baseUrl}${_.leadEndpoint}`,{method:"POST",body:JSON.stringify(e)});return m.info("Enviando lead",e),t},le=async()=>{const e=E();for(const t of e)if(t.status!=="success")try{t.status="sending",t.attempts++,l(e),await C(t.payload),t.status="success"}catch(n){t.status="failed",m.error("Falha ao enviar lead",n)}l(e)},L=async()=>{if(r.initialized)return;le();const e=M();de(e.debug);const t=await ie(e.key),n=w(),o=b();if(!ae(t.allowedDomains)){console.error("[Widget] domínio não autorizado");return}const i=z();r.config=e,r.sessionId=n,r.tenant=t,r.initialized=!0,h(c.SESSION_CREATED,n);const me=F(i,t.widgetConfig.widget.position,t.widgetConfig.theme.primaryColor);oe(me,i),m.info("Widget inicializado",{config:e,tenant:t,sessionId:n,tracking:o})},ue=()=>{if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",L);return}L()};O(c.LEAD_SUBMIT,async e=>{console.log("ENVIANDO LEAD",e);const t=await C(e);console.log("RESPOSTA API",t)}),ue()}));

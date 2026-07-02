@@ -3,8 +3,9 @@ import type { Lead } from "../../types/lead";
 import { emit } from "../../events/bus";
 
 import { EVENTS } from "../../events/events";
-
-
+import { createStatus } from "../status/create-status";
+import { updateStatus } from "../status/update-status";
+import { resetForm } from "./reset-form";
 import {
     validateEmail,
     validateName,
@@ -25,72 +26,33 @@ import {
 
 
 export const registerFormSubmit =
-(
-    form: HTMLFormElement
+    (form: HTMLFormElement) => {
+        if (isFormRegistered()) {
+            return;
+        }
 
-) => {
-
-
-    if (isFormRegistered()) {
-        return;
-    }
-
-
-    markFormRegistered();
+        markFormRegistered();
 
 
 
-    form.addEventListener(
-        "submit",
-        event => {
-
-
+        form.addEventListener("submit", event => {
             event.preventDefault();
-
-
-
-            const data =
-                new FormData(form);
-
-
+            const data = new FormData(form);
 
             const lead: Lead = {
-
-
                 name:
-                    String(
-                        data.get("name") ?? ""
-                    ),
-
-
+                    String(data.get("name") ?? ""),
 
                 phone:
-                    String(
-                        data.get("phone") ?? ""
-                    ),
-
-
+                    String(data.get("phone") ?? ""),
 
                 email:
-                    String(
-                        data.get("email") ?? ""
-                    )
-
+                    String(data.get("email") ?? "")
 
             };
-
-
-
-            /**
-             * Validações
-             */
-
-
             if (!validateName(lead.name)) {
 
-                console.warn(
-                    "Nome inválido"
-                );
+                console.warn("Nome inválido!")
 
                 return;
             }
@@ -99,9 +61,7 @@ export const registerFormSubmit =
 
             if (!validatePhone(lead.phone)) {
 
-                console.warn(
-                    "Telefone inválido"
-                );
+                console.warn("Telefone inválido");
 
                 return;
             }
@@ -110,9 +70,7 @@ export const registerFormSubmit =
 
             if (!validateEmail(lead.email)) {
 
-                console.warn(
-                    "Email inválido"
-                );
+                console.warn("Email inválido");
 
                 return;
             }
@@ -120,27 +78,23 @@ export const registerFormSubmit =
 
 
 
-            const payload =
-                createLeadPayload(
-                    lead
-                );
+            const payload = createLeadPayload(lead);
+            const status = createStatus(form.parentElement as HTMLElement);
 
 
-
-            addLeadToQueue(
-                payload
-            );
+            updateStatus(status, "loading");
 
 
+            addLeadToQueue(payload);
 
-            emit(
-                EVENTS.LEAD_SUBMIT,
-                payload
-            );
+            emit(EVENTS.LEAD_SUBMIT, payload);
+            updateStatus(status, "success");
 
+
+            resetForm(form);
 
         }
-    );
+        );
 
 
-};
+    };

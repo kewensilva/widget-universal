@@ -174,6 +174,38 @@ export const modalStyles = `
 
 
 }
+.crm-widget-status {
 
+
+ margin-top:12px;
+
+
+ text-align:center;
+
+
+ font-size:14px;
+
+
+}
+
+
+
+.crm-success {
+
+
+ color:#16a34a;
+
+
+}
+
+
+
+.crm-error {
+
+
+ color:#dc2626;
+
+
+}
 
 `;

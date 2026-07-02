@@ -1,18 +1,20 @@
-let formInstance: HTMLFormElement | null = null;
+let formInstance:
+HTMLFormElement | null = null;
 
 
 export const setForm =
 (
- form:HTMLFormElement
-) => {
+form:HTMLFormElement
+)=>{
 
- formInstance = form;
+ formInstance=form;
 
 };
 
 
+
 export const getForm =
-() => {
+()=>{
 
  return formInstance;
 

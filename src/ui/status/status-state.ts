@@ -1,28 +1,19 @@
-type Status =
- | "idle"
- | "loading"
- | "success"
- | "error";
+let statusElement:
+HTMLElement | null = null;
 
 
-let currentStatus: Status =
-"idle";
-
-
-export const setStatus =
-(
- status:Status
+export const setStatusElement = (
+    element: HTMLElement
 ) => {
 
- currentStatus =
- status;
+    statusElement = element;
 
 };
 
 
-export const getStatus =
-():Status => {
 
- return currentStatus;
+export const getStatusElement = () => {
+
+    return statusElement;
 
 };

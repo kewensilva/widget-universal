@@ -65,7 +65,7 @@ export const createForm = (
       <input
         name="phone"
         type="tel"
-        placeholder="Telefone"
+        placeholder="Telefone Ex:(11 999999999)"
         required
       />
 
